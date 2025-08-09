@@ -3,61 +3,278 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Упражнения для речи</title>
+  <meta name="theme-color" content="#6c5ce7">
+  <title>🎯 Упражнения для речи</title>
+
+  <!-- Подключаем красивый шрифт (всё равно офлайн-доступен через кэш) -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
   <style>
+    :root {
+      --bg-primary: #6c5ce7;
+      --bg-secondary: #a29bfe;
+      --text: #2d3436;
+      --bg-card: rgba(255, 255, 255, 0.95);
+      --shadow: rgba(0, 0, 0, 0.1);
+      --btn-hover: #554fc5;
+      --border: rgba(255, 255, 255, 0.3);
+    }
+
+    .dark-mode {
+      --bg-primary: #554fc5;
+      --bg-secondary: #3b3a68;
+      --text: #f5f6fa;
+      --bg-card: rgba(30, 30, 40, 0.3);
+      --shadow: rgba(0, 0, 0, 0.2);
+      --border: rgba(255, 255, 255, 0.1);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      transition: background 0.4s, color 0.4s, transform 0.3s, box-shadow 0.3s;
+    }
+
     body {
-      font-family: 'Segoe UI', sans-serif;
-      text-align: center;
-      padding: 40px;
-      background: #f8f9fa;
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(135deg, var(--bg-primary), var(--bg-secondary));
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+      line-height: 1.6;
     }
+
     .container {
-      max-width: 600px;
-      margin: 0 auto;
-      padding: 20px;
-      background: white;
-      border-radius: 12px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      background: var(--bg-card);
+      backdrop-filter: blur(12px);
+      width: 100%;
+      max-width: 520px;
+      border-radius: 24px;
+      box-shadow: 0 15px 35px var(--shadow);
+      padding: 32px;
+      text-align: center;
+      border: 1px solid var(--border);
+      position: relative;
     }
-    button {
-      background: #1a73e8;
-      color: white;
-      border: none;
-      padding: 12px 24px;
-      margin: 10px;
-      font-size: 16px;
-      border-radius: 8px;
+
+    h1 {
+      font-size: 1.9rem;
+      margin-bottom: 12px;
+      font-weight: 600;
+      background: linear-gradient(to right, #74b9ff, #00cec9);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    p.intro {
+      color: rgba(45, 52, 54, 0.7);
+      margin-bottom: 32px;
+      font-size: 1rem;
+    }
+
+    .theme-toggle {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       cursor: pointer;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     }
+
+    .theme-toggle svg {
+      width: 18px;
+      height: 18px;
+      fill: var(--text);
+    }
+
+    .buttons {
+      display: flex;
+      justify-content: center;
+      gap: 24px;
+      margin-bottom: 36px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: white;
+      color: var(--bg-primary);
+      border: none;
+      padding: 18px 28px;
+      border-radius: 18px;
+      cursor: pointer;
+      font-size: 1rem;
+      font-weight: 500;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
+      min-width: 130px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+      transition: none;
+    }
+
+    .btn:hover::after {
+      left: 100%;
+      transition: left 0.7s;
+    }
+
+    .btn:hover {
+      transform: translateY(-6px) scale(1.03);
+      box-shadow: 0 12px 25px rgba(0, 0, 0, 0.18);
+    }
+
+    .btn:active {
+      transform: translateY(-2px);
+    }
+
+    .btn svg {
+      width: 28px;
+      height: 28px;
+      margin-bottom: 8px;
+    }
+
     #result {
-      margin-top: 30px;
-      padding: 20px;
-      background: #e8f4fd;
-      border-radius: 8px;
       display: none;
+      padding: 28px;
+      background: white;
+      border-radius: 18px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+      margin-top: 20px;
+      border: 2px solid #e0e0e0;
+      animation: popIn 0.6s ease forwards;
+      opacity: 0;
+    }
+
+    @keyframes popIn {
+      0% { transform: scale(0.8); opacity: 0; }
+      70% { transform: scale(1.05); }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
+    #exerciseTitle {
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: var(--bg-primary);
+      margin-bottom: 12px;
+    }
+
+    #exerciseDesc {
+      color: #636e72;
+      line-height: 1.7;
+      font-size: 1.05rem;
+    }
+
+    .offline-hint {
+      margin-top: 20px;
+      font-size: 0.85rem;
+      color: rgba(45, 52, 54, 0.6);
+    }
+
+    @media (max-width: 480px) {
+      .buttons {
+        flex-direction: column;
+        align-items: center;
+      }
+      .btn {
+        width: 100%;
+        max-width: 220px;
+      }
+      h1 {
+        font-size: 1.6rem;
+      }
+      .container {
+        padding: 24px;
+      }
     }
   </style>
 </head>
 <body>
 
   <div class="container">
-    <h1>🎯 Упражнения для речи</h1>
-    <p>Нажми кнопку — получи случайное упражнение</p>
+    <!-- Переключатель темы -->
+    <div class="theme-toggle" id="themeToggle">
+      <svg id="themeIcon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+        <path d="M12 3a9 9 0 1 0 9 9c0-.46-.04-.92-.1-1.36a5.389 5.389 0 0 1-4.4 2.26 5.403 5.403 0 0 1-3.14-9.8c-.44-.06-.9-.1-1.36-.1z"/>
+      </svg>
+    </div>
 
-    <button id="aloudBtn">🗣 Вслух</button>
-    <button id="silentBtn">🤫 Молча</button>
+    <h1>🎯 Упражнения для речи</h1>
+    <p class="intro">Нажми на иконку — получи случайное упражнение</p>
+
+    <div class="buttons">
+      <button class="btn" id="aloudBtn">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12 2C13.1 2 14 2.9 14 4V12C14 13.1 13.1 14 12 14S10 13.1 10 12V4C10 2.9 10.9 2 12 2ZM19 9V17H17V21H7V17H5V9H3V21C3 21.55 3.45 22 4 22H20C20.55 22 21 21.55 21 21V9H19ZM12 4H5V9H19V4H12Z"/>
+        </svg>
+        <span>Вслух</span>
+      </button>
+      <button class="btn" id="silentBtn">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/>
+        </svg>
+        <span>Молча</span>
+      </button>
+    </div>
 
     <div id="result">
       <h2 id="exerciseTitle"></h2>
       <p id="exerciseDesc"></p>
     </div>
+
+    <p class="offline-hint">✅ Первый раз открой с интернетом — потом будет работать без сети</p>
   </div>
 
   <!-- Подключаем упражнения -->
   <script src="exercises.js"></script>
 
-  <!-- Основной скрипт -->
   <script>
+    // Переключение темы
+    const themeToggle = document.getElementById('themeToggle');
+    const themeIcon = document.getElementById('themeIcon');
+    const body = document.body;
+
+    // Проверяем сохранённую тему
+    if (localStorage.getItem('darkMode') === 'true') {
+      body.classList.add('dark-mode');
+      themeIcon.innerHTML = '<path d="M12 7a5 5 0 1 0 0 10 5 5 0 0 0 0-10zm0-5a12 12 0 1 0 0 24 12 12 0 0 0 0-24z"/>';
+    }
+
+    themeToggle.addEventListener('click', () => {
+      body.classList.toggle('dark-mode');
+      if (body.classList.contains('dark-mode')) {
+        themeIcon.innerHTML = '<path d="M12 7a5 5 0 1 0 0 10 5 5 0 0 0 0-10zm0-5a12 12 0 1 0 0 24 12 12 0 0 0 0-24z"/>';
+        localStorage.setItem('darkMode', 'true');
+      } else {
+        themeIcon.innerHTML = '<path d="M12 3a9 9 0 1 0 9 9c0-.46-.04-.92-.1-1.36a5.389 5.389 0 0 1-4.4 2.26 5.403 5.403 0 0 1-3.14-9.8c-.44-.06-.9-.1-1.36-.1z"/>';
+        localStorage.setItem('darkMode', 'false');
+      }
+    });
+
+    // Основная логика
     document.addEventListener('DOMContentLoaded', () => {
       const aloudBtn = document.getElementById('aloudBtn');
       const silentBtn = document.getElementById('silentBtn');
@@ -65,33 +282,35 @@
       const titleEl = document.getElementById('exerciseTitle');
       const descEl = document.getElementById('exerciseDesc');
 
-      // Проверка: доступны ли упражнения
       if (!window.exercises) {
         resultDiv.style.display = 'block';
+        resultDiv.style.background = '#fd79a8';
+        resultDiv.style.color = 'white';
         titleEl.textContent = 'Ошибка';
-        descEl.textContent = 'Файл exercises.js не загрузился. Проверь, лежит ли он рядом с index.html.';
-        console.error('window.exercises не определён');
+        descEl.textContent = 'Файл exercises.js не загрузился.';
+        console.error('window.exercises не найден');
         return;
       }
 
-      // Случайный выбор
       const random = arr => arr[Math.floor(Math.random() * arr.length)];
 
-      aloudBtn.addEventListener('click', () => {
-        const ex = random(window.exercises.aloud);
+      // Функция для показа упражнения
+      const showExercise = (type) => {
+        const ex = random(window.exercises[type]);
         titleEl.textContent = ex.title;
         descEl.textContent = ex.desc;
         resultDiv.style.display = 'block';
-      });
+        resultDiv.style.opacity = 0;
+        setTimeout(() => {
+          resultDiv.style.opacity = 1;
+        }, 50);
+        resultDiv.scrollIntoView({ behavior: 'smooth' });
+      };
 
-      silentBtn.addEventListener('click', () => {
-        const ex = random(window.exercises.silent);
-        titleEl.textContent = ex.title;
-        descEl.textContent = ex.desc;
-        resultDiv.style.display = 'block';
-      });
+      aloudBtn.addEventListener('click', () => showExercise('aloud'));
+      silentBtn.addEventListener('click', () => showExercise('silent'));
 
-      // Регистрация Service Worker
+      // Service Worker
       if ('serviceWorker' in navigator) {
         navigator.serviceWorker.register('sw.js')
           .then(reg => console.log('SW зарегистрирован'))
