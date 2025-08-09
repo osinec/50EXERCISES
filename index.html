@@ -6,7 +6,7 @@
   <meta name="theme-color" content="#0d6efd">
   <title>Минутные упражнения для спикера</title>
 
-  <!-- Подключаем шрифт -->
+  <!-- Шрифт -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
   <style>
@@ -19,7 +19,6 @@
       --text-muted: #4a5568;
       --shadow: rgba(13, 110, 253, 0.15);
       --border: rgba(13, 110, 253, 0.2);
-      --hover: rgba(13, 110, 253, 0.08);
     }
 
     * {
@@ -31,7 +30,9 @@
 
     body {
       font-family: 'Inter', sans-serif;
-      background: linear-gradient(135deg, #0d6efd 0%, #1a5dbf 100%);
+      background: linear-gradient(-45deg, #0d6efd, #1a5dbf, #3a3aad, #5a34a8);
+      background-size: 400% 400%;
+      animation: gradientShift 15s ease infinite;
       color: var(--text);
       min-height: 100vh;
       display: flex;
@@ -39,7 +40,12 @@
       align-items: center;
       padding: 20px;
       line-height: 1.6;
-      background-attachment: fixed;
+    }
+
+    @keyframes gradientShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
     }
 
     .container {
@@ -49,11 +55,12 @@
       width: 100%;
       max-width: 560px;
       border-radius: 28px;
-      box-shadow: 0 20px 50px var(--shadow);
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2);
       padding: 36px;
       text-align: center;
       border: 1px solid var(--border);
-      overflow: hidden;
+      position: relative;
+      z-index: 1;
     }
 
     h1 {
@@ -97,7 +104,6 @@
       background: var(--white);
       border: 2px solid var(--blue);
       color: var(--blue-dark);
-      transition: transform 0.3s, box-shadow 0.3s, background 0.3s;
     }
 
     .btn::before {
@@ -122,15 +128,11 @@
       color: var(--white);
     }
 
-    .btn:hover svg {
-      fill: var(--white);
-    }
-
     .btn:active {
       transform: translateY(-3px);
     }
 
-    #aloudBtn svg, #silentBtn svg {
+    svg {
       width: 32px;
       height: 32px;
       fill: var(--blue);
@@ -138,7 +140,7 @@
       transition: fill 0.3s;
     }
 
-    #aloudBtn:hover svg, #silentBtn:hover svg {
+    .btn:hover svg {
       fill: var(--white);
     }
 
@@ -152,7 +154,6 @@
       margin-top: 20px;
       border: 2px solid var(--blue);
       animation: popIn 0.8s ease forwards;
-      transform-origin: center;
     }
 
     @keyframes popIn {
@@ -194,35 +195,14 @@
       50% { transform: translateY(-6px); }
     }
 
-    .offline-hint {
-      margin-top: 24px;
-      font-size: 0.85rem;
-      color: #6c757d;
-      font-style: italic;
+    .error {
+      background: #ffebee;
+      border-color: #d32f2f;
+      color: #d32f2f;
     }
 
-    @media (max-width: 480px) {
-      .buttons {
-        flex-direction: column;
-        align-items: center;
-      }
-      .btn {
-        width: 100%;
-        max-width: 240px;
-      }
-      h1 {
-        font-size: 1.8rem;
-      }
-      .container {
-        padding: 28px;
-        border-radius: 24px;
-      }
-      #exerciseTitle {
-        font-size: 1.5rem;
-      }
-      #exerciseDesc {
-        font-size: 1.05rem;
-      }
+    .error p {
+      color: #c62828;
     }
   </style>
 </head>
@@ -254,7 +234,7 @@
     </div>
   </div>
 
-  <!-- Внешний файл с упражнениями -->
+  <!-- Подключаем упражнения -->
   <script src="exercises.js"></script>
 
   <script>
@@ -265,12 +245,14 @@
       const titleEl = document.getElementById('exerciseTitle');
       const descEl = document.getElementById('exerciseDesc');
 
-      // Проверяем, загрузился ли exercises.js
+      // Проверка загрузки exercises.js
       function waitForExercises() {
-        if (window.exercises) {
+        if (window.exercises && Array.isArray(window.exercises.aloud) && Array.isArray(window.exercises.silent)) {
+          console.log('✅ Упражнения загружены');
           initApp();
         } else {
-          setTimeout(waitForExercises, 100); // Проверяем каждые 100мс
+          console.log('⏳ Ждём exercises.js...');
+          setTimeout(waitForExercises, 100);
         }
       }
 
@@ -278,40 +260,37 @@
         const random = arr => arr[Math.floor(Math.random() * arr.length)];
 
         const showExercise = (type) => {
-          if (!window.exercises[type] || window.exercises[type].length === 0) {
-            titleEl.textContent = 'Ошибка';
-            descEl.textContent = `Нет упражнений для категории "${type}".`;
+          try {
+            const ex = random(window.exercises[type]);
+            titleEl.textContent = ex.title;
+            descEl.textContent = ex.desc;
             resultDiv.style.display = 'block';
-            resultDiv.style.opacity = 1;
-            return;
+            resultDiv.style.opacity = 0;
+            setTimeout(() => resultDiv.style.opacity = 1, 50);
+            resultDiv.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          } catch (e) {
+            showError('Ошибка при показе упражнения: ' + e.message);
           }
-
-          const ex = random(window.exercises[type]);
-          titleEl.textContent = ex.title;
-          descEl.textContent = ex.desc;
-          resultDiv.style.display = 'block';
-          resultDiv.style.opacity = 0;
-
-          setTimeout(() => {
-            resultDiv.style.opacity = 1;
-          }, 50);
-
-          resultDiv.scrollIntoView({ behavior: 'smooth', block: 'center' });
         };
 
         aloudBtn.addEventListener('click', () => showExercise('aloud'));
         silentBtn.addEventListener('click', () => showExercise('silent'));
       }
 
-      // Запускаем проверку
-      waitForExercises();
-
-      // Регистрация Service Worker
-      if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.register('sw.js')
-          .then(reg => console.log('SW зарегистрирован'))
-          .catch(err => console.error('Ошибка SW:', err));
+      function showError(msg) {
+        resultDiv.className = 'error';
+        titleEl.textContent = 'Ошибка';
+        descEl.textContent = msg;
+        resultDiv.style.display = 'block';
+        console.error('Ошибка:', msg);
       }
+
+      // Проверяем, загрузился ли файл
+      const script = document.querySelector('script[src="exercises.js"]');
+      script.onerror = () => showError('Не удалось загрузить exercises.js. Проверь путь и сервер.');
+
+      // Начинаем ожидание
+      waitForExercises();
     });
   </script>
 </body>
