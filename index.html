@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="theme-color" content="#3498db">
+  <title>Упражнения для речи</title>
+
+  <!-- PWA Manifest -->
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎯</text></svg>">
+
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #f8f9fa;
+      color: #212529;
+      text-align: center;
+      padding: 40px;
+      margin: 0;
+      min-height: 100vh;
+    }
+    h1 { color: #1a73e8; }
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 20px;
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    }
+    button {
+      background: #1a73e8;
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      font-size: 16px;
+      margin: 15px;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    button:hover { background: #1557b0; }
+    #result {
+      margin-top: 30px;
+      padding: 20px;
+      background: #e8f4fd;
+      border-radius: 8px;
+      display: none;
+    }
+    h2 { margin-bottom: 10px; color: #1a73e8; }
+    p { color: #444; }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h1>🎯 Упражнения для речи</h1>
+    <p>Нажми кнопку — получи случайное упражнение</p>
+
+    <button id="aloudBtn">🗣 Вслух</button>
+    <button id="silentBtn">🤫 Молча</button>
+
+    <div id="result">
+      <h2 id="exerciseTitle"></h2>
+      <p id="exerciseDesc"></p>
+    </div>
+  </div>
+
+  <!-- Подключаем упражнения и логику -->
+  <script src="exercises.js"></script>
+  <script>
+    // Основная логика
+    document.addEventListener('DOMContentLoaded', () => {
+      const aloudBtn = document.getElementById('aloudBtn');
+      const silentBtn = document.getElementById('silentBtn');
+      const resultDiv = document.getElementById('result');
+      const titleEl = document.getElementById('exerciseTitle');
+      const descEl = document.getElementById('exerciseDesc');
+
+      // Случайный выбор
+      const random = arr => arr[Math.floor(Math.random() * arr.length)];
+
+      aloudBtn.addEventListener('click', () => {
+        const ex = random(window.speechExercises.aloud);
+        titleEl.textContent = ex.title;
+        descEl.textContent = ex.desc;
+        resultDiv.style.display = 'block';
+      });
+
+      silentBtn.addEventListener('click', () => {
+        const ex = random(window.speechExercises.silent);
+        titleEl.textContent = ex.title;
+        descEl.textContent = ex.desc;
+        resultDiv.style.display = 'block';
+      });
+
+      // Регистрация Service Worker
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('sw.js')
+            .then(reg => console.log('SW зарегистрирован'))
+            .catch(err => console.error('Ошибка SW:', err));
+        });
+      }
+    });
+  </script>
+</body>
+</html>
