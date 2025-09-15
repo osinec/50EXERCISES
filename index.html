@@ -5,11 +5,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <meta name="theme-color" content="#0d6efd">
   <title>Минутные упражнения для спикера</title>
-
   <!-- Шрифт -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
   <style>
+    html, body {
+      overflow: hidden; /* 🔒 Блокируем скроллинг */
+      margin: 0;
+      padding: 0;
+      height: 100%;
+    }
+
     :root {
       --blue: #0d6efd;
       --blue-dark: #0a58ca;
@@ -34,7 +40,7 @@
       background-size: 400% 400%;
       animation: gradientShift 15s ease infinite;
       color: var(--text);
-      min-height: 100vh;
+      height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -82,7 +88,7 @@
       display: flex;
       justify-content: center;
       gap: 28px;
-      margin-bottom: 40px;
+      margin-bottom: 30px;
       flex-wrap: wrap;
     }
 
@@ -204,6 +210,31 @@
     .error p {
       color: #c62828;
     }
+
+    /* 🆕 Кнопка Telegram */
+    .telegram-btn {
+      display: inline-block;
+      margin-top: 24px;
+      padding: 14px 28px;
+      background: var(--blue);
+      color: white;
+      text-decoration: none;
+      border-radius: 16px;
+      font-weight: 600;
+      font-size: 1rem;
+      box-shadow: 0 6px 16px rgba(13, 110, 253, 0.3);
+      transition: all 0.3s ease;
+    }
+
+    .telegram-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px rgba(13, 110, 253, 0.4);
+      background: var(--blue-dark);
+    }
+
+    .telegram-btn:active {
+      transform: translateY(-1px);
+    }
   </style>
 </head>
 <body>
@@ -232,6 +263,11 @@
       <h2 id="exerciseTitle"></h2>
       <p id="exerciseDesc"></p>
     </div>
+
+    <!-- 🆕 Кнопка Telegram -->
+    <a href="https://t.me/osinec_me/6" class="telegram-btn" target="_blank">
+      Если хочешь, чтобы твом слова имели вес - жми!
+    </a>
   </div>
 
   <!-- Подключаем упражнения -->
