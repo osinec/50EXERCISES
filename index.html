@@ -2,7 +2,7 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
   <meta name="theme-color" content="#0d6efd">
   <title>Минутные упражнения для спикера</title>
   <!-- Шрифт -->
@@ -10,10 +10,10 @@
 
   <style>
     html, body {
-      overflow: hidden; /* 🔒 Блокируем скроллинг */
       margin: 0;
       padding: 0;
       height: 100%;
+      /* 🔓 Скролл разрешён, но управляем им через дизайн */
     }
 
     :root {
@@ -40,12 +40,13 @@
       background-size: 400% 400%;
       animation: gradientShift 15s ease infinite;
       color: var(--text);
-      height: 100vh;
+      min-height: 100vh;
       display: flex;
       justify-content: center;
-      align-items: center;
-      padding: 20px;
-      line-height: 1.6;
+      align-items: flex-start; /* 🔼 Выравниваем по верху, чтобы был доступ к кнопке */
+      padding: 16px 12px; /* 📱 Уменьшаем паддинги на мобильных */
+      line-height: 1.5;
+      overflow-x: hidden;
     }
 
     @keyframes gradientShift {
@@ -60,9 +61,9 @@
       -webkit-backdrop-filter: blur(12px);
       width: 100%;
       max-width: 560px;
-      border-radius: 28px;
-      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2);
-      padding: 36px;
+      border-radius: 24px;
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.2);
+      padding: 24px 20px; /* 📱 Уменьшаем внутренние отступы */
       text-align: center;
       border: 1px solid var(--border);
       position: relative;
@@ -70,25 +71,26 @@
     }
 
     h1 {
-      font-size: 2.1rem;
-      margin-bottom: 14px;
+      font-size: 1.8rem; /* 📱 Уменьшаем заголовок на мобильных */
+      margin-bottom: 12px;
       font-weight: 700;
       color: var(--blue-dark);
       letter-spacing: -0.5px;
+      line-height: 1.2;
     }
 
     p.intro {
       color: var(--text-muted);
-      margin-bottom: 36px;
-      font-size: 1.05rem;
+      margin-bottom: 24px; /* 📱 Уменьшаем отступ */
+      font-size: 1rem;
       font-weight: 500;
     }
 
     .buttons {
       display: flex;
       justify-content: center;
-      gap: 28px;
-      margin-bottom: 30px;
+      gap: 20px; /* 📱 Уменьшаем зазор */
+      margin-bottom: 24px; /* 📱 Уменьшаем отступ */
       flex-wrap: wrap;
     }
 
@@ -98,13 +100,13 @@
       align-items: center;
       justify-content: center;
       border: none;
-      padding: 20px 30px;
-      border-radius: 20px;
+      padding: 16px 24px; /* 📱 Уменьшаем паддинги кнопок */
+      border-radius: 18px;
       cursor: pointer;
-      font-size: 1.05rem;
+      font-size: 1rem;
       font-weight: 600;
-      box-shadow: 0 8px 24px var(--shadow);
-      min-width: 150px;
+      box-shadow: 0 6px 20px var(--shadow);
+      min-width: 130px; /* 📱 Уменьшаем минимальную ширину */
       position: relative;
       overflow: hidden;
       background: var(--white);
@@ -128,21 +130,21 @@
     }
 
     .btn:hover {
-      transform: translateY(-8px) scale(1.05);
-      box-shadow: 0 16px 32px rgba(13, 110, 253, 0.25);
+      transform: translateY(-6px) scale(1.03);
+      box-shadow: 0 12px 28px rgba(13, 110, 253, 0.25);
       background: var(--blue);
       color: var(--white);
     }
 
     .btn:active {
-      transform: translateY(-3px);
+      transform: translateY(-2px);
     }
 
     svg {
-      width: 32px;
-      height: 32px;
+      width: 28px; /* 📱 Уменьшаем иконки */
+      height: 28px;
       fill: var(--blue);
-      margin-bottom: 10px;
+      margin-bottom: 8px;
       transition: fill 0.3s;
     }
 
@@ -153,13 +155,14 @@
     #result {
       display: none;
       opacity: 0;
-      padding: 32px;
+      padding: 24px 20px; /* 📱 Уменьшаем паддинги */
       background: linear-gradient(135deg, var(--blue-light), var(--white));
-      border-radius: 22px;
-      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
-      margin-top: 20px;
+      border-radius: 20px;
+      box-shadow: 0 10px 26px rgba(0, 0, 0, 0.12);
+      margin: 20px auto 0;
       border: 2px solid var(--blue);
       animation: popIn 0.8s ease forwards;
+      max-width: 100%;
     }
 
     @keyframes popIn {
@@ -169,36 +172,37 @@
     }
 
     #exerciseTitle {
-      font-size: 1.7rem;
+      font-size: 1.5rem; /* 📱 Уменьшаем заголовок упражнения */
       font-weight: 700;
       color: var(--blue-dark);
-      margin-bottom: 14px;
+      margin-bottom: 12px;
       background: linear-gradient(to right, var(--blue), var(--blue-dark));
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
+      line-height: 1.3;
     }
 
     #exerciseDesc {
       color: var(--text-muted);
-      line-height: 1.8;
-      font-size: 1.1rem;
+      line-height: 1.7;
+      font-size: 1rem;
       font-weight: 500;
-      max-width: 500px;
+      max-width: 100%;
       margin: 0 auto;
     }
 
     #result::before {
       content: '💡';
-      font-size: 2rem;
+      font-size: 1.8rem; /* 📱 Уменьшаем иконку лампочки */
       display: block;
-      margin-bottom: 12px;
+      margin-bottom: 10px;
       animation: float 3s ease-in-out infinite;
     }
 
     @keyframes float {
       0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-6px); }
+      50% { transform: translateY(-5px); } /* 📱 Уменьшаем анимацию */
     }
 
     .error {
@@ -214,26 +218,83 @@
     /* 🆕 Кнопка Telegram */
     .telegram-btn {
       display: inline-block;
-      margin-top: 24px;
-      padding: 14px 28px;
+      margin: 20px auto 0; /* 📱 Центрируем и уменьшаем отступ */
+      padding: 12px 24px;
       background: var(--blue);
       color: white;
       text-decoration: none;
-      border-radius: 16px;
+      border-radius: 14px;
       font-weight: 600;
-      font-size: 1rem;
-      box-shadow: 0 6px 16px rgba(13, 110, 253, 0.3);
+      font-size: 0.95rem;
+      box-shadow: 0 5px 14px rgba(13, 110, 253, 0.3);
       transition: all 0.3s ease;
+      width: 100%;
+      max-width: 300px;
     }
 
     .telegram-btn:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 8px 20px rgba(13, 110, 253, 0.4);
+      transform: translateY(-2px);
+      box-shadow: 0 7px 18px rgba(13, 110, 253, 0.4);
       background: var(--blue-dark);
     }
 
     .telegram-btn:active {
-      transform: translateY(-1px);
+      transform: translateY(0);
+    }
+
+    /* 📱 Адаптация для маленьких экранов */
+    @media (max-width: 480px) {
+      body {
+        padding: 12px 8px;
+      }
+
+      .container {
+        padding: 20px 16px;
+        border-radius: 20px;
+      }
+
+      h1 {
+        font-size: 1.6rem;
+      }
+
+      .buttons {
+        gap: 16px;
+        margin-bottom: 20px;
+      }
+
+      .btn {
+        padding: 14px 20px;
+        min-width: 120px;
+        border-radius: 16px;
+      }
+
+      svg {
+        width: 26px;
+        height: 26px;
+      }
+
+      #result {
+        padding: 20px 16px;
+        margin: 16px auto 0;
+      }
+
+      #exerciseTitle {
+        font-size: 1.4rem;
+      }
+
+      #exerciseDesc {
+        font-size: 0.95rem;
+      }
+
+      #result::before {
+        font-size: 1.6rem;
+      }
+
+      .telegram-btn {
+        padding: 10px 20px;
+        font-size: 0.9rem;
+        border-radius: 12px;
+      }
     }
   </style>
 </head>
@@ -266,7 +327,7 @@
 
     <!-- 🆕 Кнопка Telegram -->
     <a href="https://t.me/osinec_me/6" class="telegram-btn" target="_blank">
-      👇Если хочешь, чтобы твои слова имели вес - жми!
+      📥 Скачать для Mac
     </a>
   </div>
 
@@ -303,7 +364,9 @@
             resultDiv.style.display = 'block';
             resultDiv.style.opacity = 0;
             setTimeout(() => resultDiv.style.opacity = 1, 50);
-            resultDiv.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+            // Плавно скроллим к результату
+            resultDiv.scrollIntoView({ behavior: 'smooth', block: 'start' });
           } catch (e) {
             showError('Ошибка при показе упражнения: ' + e.message);
           }
@@ -318,6 +381,7 @@
         titleEl.textContent = 'Ошибка';
         descEl.textContent = msg;
         resultDiv.style.display = 'block';
+        resultDiv.scrollIntoView({ behavior: 'smooth', block: 'start' });
         console.error('Ошибка:', msg);
       }
 
