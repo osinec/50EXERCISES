@@ -65,7 +65,7 @@
             border-radius: 2px;
         }
 
-        /* Меню — зеленый градиент, на всю ширину */
+        /* Меню — зеленый градиент */
         .sidebar-container {
             width: 100%;
             margin-bottom: 20px;
@@ -177,12 +177,15 @@
             border-radius: 16px;
         }
 
+        /* Превью — теперь с реальным кадром видео */
         .video-preview {
             width: 100%;
             height: 100%;
-            background: linear-gradient(135deg, #0D9488, #06B6D4);
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            border-radius: 16px;
             display: flex;
-            flex-direction: column;
             justify-content: center;
             align-items: center;
             cursor: pointer;
@@ -190,6 +193,7 @@
             color: white;
             text-align: center;
             padding: 20px;
+            transition: all 0.3s ease;
         }
 
         .video-preview::before {
@@ -200,6 +204,12 @@
             right: 0;
             bottom: 0;
             background: linear-gradient(135deg, rgba(0,0,0,0.3), rgba(139,92,246,0.1));
+            border-radius: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .video-preview:hover::before {
+            background: linear-gradient(135deg, rgba(0,0,0,0.2), rgba(139,92,246,0.2));
         }
 
         .preview-play-icon {
@@ -207,6 +217,11 @@
             margin-bottom: 16px;
             text-shadow: 0 4px 12px rgba(0,0,0,0.5);
             filter: drop-shadow(0 2px 6px rgba(0,0,0,0.4));
+            transition: all 0.3s ease;
+        }
+
+        .video-preview:hover .preview-play-icon {
+            transform: scale(1.1);
         }
 
         .preview-text {
@@ -217,7 +232,7 @@
             letter-spacing: 0.5px;
         }
 
-        /* ФОРМА — РАСПОЛОЖЕНА СЛЕВА ВНИЗУ */
+        /* ФОРМА — СЛЕВА ВНИЗУ */
         .form-wrapper {
             width: 100%;
             display: flex;
@@ -355,7 +370,7 @@
             </div>
         </div>
 
-        <!-- ВИДЕО — ЦЕНТРИРОВАННОЕ -->
+        <!-- ВИДЕО — ЦЕНТРИРОВАННОЕ, С ПЕРВЫМ КАДРОМ -->
         <div class="video-container">
             <div class="video-player-container">
                 <!-- Контейнер для iframe -->
@@ -368,8 +383,8 @@
                     ></iframe>
                 </div>
 
-                <!-- Превью -->
-                <div class="video-preview" id="videoPreview">
+                <!-- Превью — теперь с фоновым изображением первого кадра -->
+                <div class="video-preview" id="videoPreview" style="background-image: url('https://images.unsplash.com/photo-1553877522-43269d4ea984?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80')">
                     <div class="preview-play-icon">
                         <i class="fas fa-play"></i>
                     </div>
@@ -412,6 +427,9 @@
 
         // ⚠️ ЗАМЕНИТЕ ЭТОТ URL на ваш реальный URL с Yandex.Video
         const YANDEX_VIDEO_URL = "https://runtime.video.cloud.yandex.net/player/video/vplvscsviln3pecevi4w?autoplay=1";
+
+        // ⚠️ ЗАМЕНИТЕ ЭТОТ URL на изображение первого кадра видео (или оставьте как есть)
+        // videoPreview.style.backgroundImage = "url('https://yourdomain.com/first-frame.jpg')";
 
         videoPreview.addEventListener('click', function() {
             // Скрываем превью
