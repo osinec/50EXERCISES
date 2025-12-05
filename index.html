@@ -21,14 +21,20 @@
             background-color: #f5f7fa;
             color: #333;
             padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
         }
 
         .container {
             max-width: 1200px;
+            width: 100%;
             margin: 0 auto;
             display: flex;
             flex-direction: column;
-            gap: 20px;
+            align-items: center;
+            gap: 25px;
         }
 
         /* Логотип */
@@ -38,8 +44,9 @@
             font-weight: 700;
             color: #7c4dff;
             text-align: center;
-            margin-bottom: 20px;
+            margin-bottom: 10px;
             letter-spacing: 2px;
+            width: 100%;
         }
 
         /* Заголовок страницы */
@@ -48,9 +55,11 @@
             font-size: 2.5em;
             font-weight: 600;
             text-align: center;
-            margin-bottom: 20px;
+            margin-bottom: 10px;
             position: relative;
             color: #333;
+            width: 100%;
+            max-width: 800px;
         }
 
         .page-title::after {
@@ -68,7 +77,8 @@
         /* Меню — зеленый градиент */
         .sidebar-container {
             width: 100%;
-            margin-bottom: 20px;
+            max-width: 800px;
+            margin-bottom: 10px;
             overflow: hidden;
             border-radius: 12px;
             background: linear-gradient(135deg, #00b09b, #96c93d);
@@ -77,16 +87,18 @@
 
         .sidebar-header {
             color: white;
-            padding: 15px 20px;
+            padding: 18px 20px;
             cursor: pointer;
             display: flex;
-            justify-content: space-between;
+            justify-content: center;
             align-items: center;
             font-size: 1.1em;
             font-weight: bold;
             font-family: 'Poppins', sans-serif;
             border-top-left-radius: 12px;
             border-top-right-radius: 12px;
+            position: relative;
+            text-align: center;
         }
 
         .sidebar-header::after {
@@ -94,11 +106,15 @@
             font-size: 1.5em;
             font-weight: normal;
             transition: transform 0.3s;
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
         }
 
         .sidebar-header.active::after {
             content: '-';
-            transform: rotate(180deg);
+            transform: translateY(-50%) rotate(180deg);
         }
 
         .sidebar {
@@ -121,18 +137,20 @@
         }
 
         .sidebar li {
-            margin-bottom: 10px;
+            margin-bottom: 12px;
         }
 
         .sidebar a {
             color: white;
             text-decoration: none;
-            padding: 10px 15px;
+            padding: 12px 15px;
             display: block;
-            border-radius: 4px;
+            border-radius: 6px;
             font-family: 'Inter', sans-serif;
             pointer-events: none;
             opacity: 0.9;
+            text-align: center;
+            transition: all 0.3s ease;
         }
 
         .sidebar a.active {
@@ -146,7 +164,7 @@
         .video-container {
             width: 100%;
             max-width: 800px;
-            margin: 0 auto 30px auto;
+            margin: 0 auto;
             position: relative;
             border-radius: 16px;
             overflow: hidden;
@@ -186,6 +204,7 @@
             background-repeat: no-repeat;
             border-radius: 16px;
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
             cursor: pointer;
@@ -203,13 +222,13 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: linear-gradient(135deg, rgba(0,0,0,0.3), rgba(139,92,246,0.1));
+            background: linear-gradient(135deg, rgba(0,0,0,0.4), rgba(139,92,246,0.15));
             border-radius: 16px;
             transition: all 0.3s ease;
         }
 
         .video-preview:hover::before {
-            background: linear-gradient(135deg, rgba(0,0,0,0.2), rgba(139,92,246,0.2));
+            background: linear-gradient(135deg, rgba(0,0,0,0.3), rgba(139,92,246,0.25));
         }
 
         .preview-play-icon {
@@ -218,6 +237,8 @@
             text-shadow: 0 4px 12px rgba(0,0,0,0.5);
             filter: drop-shadow(0 2px 6px rgba(0,0,0,0.4));
             transition: all 0.3s ease;
+            position: relative;
+            z-index: 1;
         }
 
         .video-preview:hover .preview-play-icon {
@@ -230,20 +251,24 @@
             font-weight: 500;
             text-shadow: 0 2px 6px rgba(0,0,0,0.5);
             letter-spacing: 0.5px;
+            position: relative;
+            z-index: 1;
         }
 
-        /* ФОРМА — СЛЕВА ВНИЗУ */
+        /* ФОРМА — ЦЕНТРИРОВАННАЯ */
         .form-wrapper {
             width: 100%;
+            max-width: 800px;
             display: flex;
-            justify-content: flex-start;
-            margin-top: 20px;
+            justify-content: center;
+            margin-top: 10px;
         }
 
         .sidebar-right {
-            width: 300px;
+            width: 100%;
+            max-width: 500px;
             background: linear-gradient(135deg, #00b09b, #96c93d);
-            padding: 25px;
+            padding: 30px;
             border-radius: 16px;
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
             backdrop-filter: blur(10px);
@@ -253,7 +278,7 @@
         .form-title {
             font-family: 'Poppins', sans-serif;
             font-size: 1.3em;
-            margin-bottom: 20px;
+            margin-bottom: 25px;
             font-weight: 600;
             color: white;
             text-align: center;
@@ -275,7 +300,7 @@
 
         input {
             width: 100%;
-            padding: 12px 15px;
+            padding: 14px 16px;
             background-color: rgba(255, 255, 255, 0.15);
             border: 1px solid rgba(255, 255, 255, 0.2);
             border-radius: 8px;
@@ -283,6 +308,10 @@
             font-size: 1em;
             transition: all 0.3s;
             font-family: 'Inter', sans-serif;
+        }
+
+        input::placeholder {
+            color: rgba(255, 255, 255, 0.7);
         }
 
         input:focus {
@@ -294,7 +323,7 @@
 
         .submit-btn {
             width: 100%;
-            padding: 14px;
+            padding: 16px;
             background: linear-gradient(90deg, #ff7a59, #ff9d4d);
             color: white;
             border: none;
@@ -305,6 +334,7 @@
             transition: all 0.3s;
             font-family: 'Poppins', sans-serif;
             box-shadow: 0 4px 15px rgba(255, 122, 89, 0.4);
+            margin-top: 10px;
         }
 
         .submit-btn:hover {
@@ -316,31 +346,191 @@
         .disclaimer {
             font-size: 0.8em;
             color: rgba(255, 255, 255, 0.8);
-            margin-top: 15px;
+            margin-top: 20px;
             line-height: 1.4;
             text-align: center;
             font-family: 'Inter', sans-serif;
         }
 
-        /* Адаптивность */
+        /* Адаптивность для телефонов */
         @media (max-width: 1024px) {
-            .video-container { 
-                max-width: 100%; 
-                height: 350px; 
+            .container {
+                gap: 20px;
             }
-            .form-wrapper { justify-content: center; }
-            .sidebar-right { width: 100%; }
+            
+            .video-container { 
+                max-width: 90%; 
+                height: 400px; 
+            }
+            
+            .sidebar-container,
+            .form-wrapper {
+                max-width: 90%;
+            }
         }
 
         @media (max-width: 768px) {
-            .video-container { height: 300px; }
-            .preview-play-icon { font-size: 3rem; }
-            .preview-text { font-size: 1rem; }
+            body {
+                padding: 15px;
+            }
+            
+            .container {
+                gap: 15px;
+            }
+            
+            .logo-osinec {
+                font-size: 2.2em;
+                margin-bottom: 5px;
+            }
+            
+            .page-title {
+                font-size: 2em;
+                margin-bottom: 5px;
+            }
+            
+            .video-container { 
+                max-width: 95%; 
+                height: 350px; 
+                border-radius: 14px;
+            }
+            
+            .sidebar-container {
+                max-width: 95%;
+                border-radius: 10px;
+            }
+            
+            .sidebar-header {
+                padding: 16px 20px;
+                font-size: 1em;
+            }
+            
+            .sidebar-right {
+                padding: 25px;
+                border-radius: 14px;
+            }
+            
+            .form-wrapper {
+                max-width: 95%;
+            }
+            
+            .preview-play-icon { 
+                font-size: 3rem; 
+                margin-bottom: 12px;
+            }
+            
+            .preview-text { 
+                font-size: 1rem; 
+                padding: 0 10px;
+            }
         }
 
         @media (max-width: 480px) {
-            .video-container { height: 250px; }
-            .preview-play-icon { font-size: 2.5rem; }
+            body {
+                padding: 10px;
+            }
+            
+            .container {
+                gap: 12px;
+            }
+            
+            .logo-osinec {
+                font-size: 1.8em;
+            }
+            
+            .page-title {
+                font-size: 1.6em;
+            }
+            
+            .page-title::after {
+                width: 40px;
+                height: 3px;
+                bottom: -8px;
+            }
+            
+            .video-container { 
+                height: 250px; 
+                border-radius: 12px;
+                max-width: 100%;
+            }
+            
+            .sidebar-container {
+                max-width: 100%;
+                border-radius: 10px;
+            }
+            
+            .sidebar-header {
+                padding: 14px 15px;
+                font-size: 0.95em;
+            }
+            
+            .sidebar-header::after {
+                right: 15px;
+                font-size: 1.3em;
+            }
+            
+            .sidebar-right {
+                padding: 20px;
+                border-radius: 12px;
+            }
+            
+            .form-wrapper {
+                max-width: 100%;
+            }
+            
+            .form-title {
+                font-size: 1.2em;
+                margin-bottom: 20px;
+            }
+            
+            .form-group {
+                margin-bottom: 16px;
+            }
+            
+            input {
+                padding: 12px 14px;
+                font-size: 0.95em;
+            }
+            
+            .submit-btn {
+                padding: 14px;
+                font-size: 1em;
+            }
+            
+            .preview-play-icon { 
+                font-size: 2.5rem; 
+                margin-bottom: 10px;
+            }
+            
+            .preview-text { 
+                font-size: 0.9rem; 
+            }
+        }
+
+        @media (max-width: 360px) {
+            .video-container { 
+                height: 220px; 
+            }
+            
+            .logo-osinec {
+                font-size: 1.6em;
+            }
+            
+            .page-title {
+                font-size: 1.4em;
+            }
+            
+            .preview-play-icon { 
+                font-size: 2rem; 
+            }
+            
+            .preview-text { 
+                font-size: 0.85rem; 
+            }
+            
+            .sidebar a {
+                padding: 10px 12px;
+                font-size: 0.9em;
+            }
         }
     </style>
 </head>
@@ -393,7 +583,7 @@
             </div>
         </div>
 
-        <!-- ФОРМА — СЛЕВА ВНИЗУ -->
+        <!-- ФОРМА — ЦЕНТРИРОВАННАЯ -->
         <div class="form-wrapper">
             <aside class="sidebar-right">
                 <h2 class="form-title">Оставьте контакты</h2>
@@ -427,9 +617,6 @@
 
         // ⚠️ ЗАМЕНИТЕ ЭТОТ URL на ваш реальный URL с Yandex.Video
         const YANDEX_VIDEO_URL = "https://runtime.video.cloud.yandex.net/player/video/vplvscsviln3pecevi4w?autoplay=1";
-
-        // ⚠️ ЗАМЕНИТЕ ЭТОТ URL на изображение первого кадра видео (или оставьте как есть)
-        // videoPreview.style.backgroundImage = "url('https://yourdomain.com/first-frame.jpg')";
 
         videoPreview.addEventListener('click', function() {
             // Скрываем превью
