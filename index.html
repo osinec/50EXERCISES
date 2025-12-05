@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Paid Ads Playbook Pt I</title>
+    <!-- Подключаем Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <!-- Иконки (для play-кнопки) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+        }
+
+        body {
+            background-color: #f5f7fa;
+            color: #333;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            gap: 20px;
+            flex-direction: column;
+        }
+
+        /* Логотип */
+        .logo-osinec {
+            font-family: 'Poppins', sans-serif;
+            font-size: 2.8em;
+            font-weight: 700;
+            color: #7c4dff;
+            text-align: center;
+            margin-bottom: 20px;
+            letter-spacing: 2px;
+        }
+
+        /* Заголовок страницы */
+        .page-title {
+            font-family: 'Poppins', sans-serif;
+            font-size: 2.5em;
+            font-weight: 600;
+            text-align: center;
+            margin-bottom: 20px;
+            position: relative;
+            color: #333;
+        }
+
+        .page-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 50px;
+            height: 4px;
+            background-color: #7c4dff;
+            border-radius: 2px;
+        }
+
+        /* Меню — зеленый градиент */
+        .sidebar-container {
+            width: 100%;
+            margin-bottom: 20px;
+            overflow: hidden;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #00b09b, #96c93d);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .sidebar-header {
+            color: white;
+            padding: 15px 20px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 1.1em;
+            font-weight: bold;
+            font-family: 'Poppins', sans-serif;
+            border-top-left-radius: 12px;
+            border-top-right-radius: 12px;
+        }
+
+        .sidebar-header::after {
+            content: '+';
+            font-size: 1.5em;
+            font-weight: normal;
+            transition: transform 0.3s;
+        }
+
+        .sidebar-header.active::after {
+            content: '-';
+            transform: rotate(180deg);
+        }
+
+        .sidebar {
+            padding: 0;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+            background: linear-gradient(135deg, #00b09b, #96c93d);
+        }
+
+        .sidebar.active {
+            max-height: 500px;
+            padding: 0 0 20px 0;
+        }
+
+        .sidebar ul {
+            list-style: none;
+            margin: 0;
+            padding: 0 20px;
+        }
+
+        .sidebar li {
+            margin-bottom: 10px;
+        }
+
+        .sidebar a {
+            color: white;
+            text-decoration: none;
+            padding: 10px 15px;
+            display: block;
+            border-radius: 4px;
+            font-family: 'Inter', sans-serif;
+            pointer-events: none;
+            opacity: 0.9;
+        }
+
+        .sidebar a.active {
+            background-color: rgba(255, 255, 255, 0.2);
+            color: white;
+            font-weight: bold;
+            opacity: 1;
+        }
+
+        /* ВИДЕО КОНТЕЙНЕР — НОВЫЙ СТИЛЬ */
+        .video-container {
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto 30px auto;
+            position: relative;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+            height: 450px;
+        }
+
+        .video-player-container {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            background: #000;
+        }
+
+        .yandex-player-container {
+            width: 100%;
+            height: 100%;
+            display: none;
+        }
+
+        .yandex-player-iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            border-radius: 16px;
+        }
+
+        .video-preview {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #0D9488, #06B6D4);
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            position: relative;
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .video-preview::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(0,0,0,0.3), rgba(139,92,246,0.1));
+        }
+
+        .preview-play-icon {
+            font-size: 4rem;
+            margin-bottom: 16px;
+            text-shadow: 0 4px 12px rgba(0,0,0,0.5);
+            filter: drop-shadow(0 2px 6px rgba(0,0,0,0.4));
+        }
+
+        .preview-title {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.4rem;
+            font-weight: 600;
+            text-shadow: 0 2px 6px rgba(0,0,0,0.5);
+            letter-spacing: 0.5px;
+        }
+
+        /* Форма — зеленый градиент */
+        .sidebar-right {
+            width: 300px;
+            background: linear-gradient(135deg, #00b09b, #96c93d);
+            padding: 25px;
+            border-radius: 16px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+        }
+
+        .form-title {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.3em;
+            margin-bottom: 20px;
+            font-weight: 600;
+            color: white;
+            text-align: center;
+            letter-spacing: 0.5px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            font-size: 0.95em;
+            color: rgba(255, 255, 255, 0.9);
+            font-family: 'Inter', sans-serif;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px 15px;
+            background-color: rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            color: white;
+            font-size: 1em;
+            transition: all 0.3s;
+            font-family: 'Inter', sans-serif;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: rgba(255, 255, 255, 0.5);
+            background-color: rgba(255, 255, 255, 0.25);
+            box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.2);
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(90deg, #ff7a59, #ff9d4d);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1.1em;
+            font-weight: 600;
+            transition: all 0.3s;
+            font-family: 'Poppins', sans-serif;
+            box-shadow: 0 4px 15px rgba(255, 122, 89, 0.4);
+        }
+
+        .submit-btn:hover {
+            background: linear-gradient(90deg, #ff6b4a, #ff8c3a);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 122, 89, 0.5);
+        }
+
+        .disclaimer {
+            font-size: 0.8em;
+            color: rgba(255, 255, 255, 0.8);
+            margin-top: 15px;
+            line-height: 1.4;
+            text-align: center;
+            font-family: 'Inter', sans-serif;
+        }
+
+        /* Адаптив */
+        @media (max-width: 1024px) {
+            .video-container { height: 350px; }
+            .sidebar-right { width: 100%; margin-bottom: 20px; }
+        }
+        @media (max-width: 768px) {
+            .video-container { height: 300px; }
+            .preview-play-icon { font-size: 3rem; }
+            .preview-title { font-size: 1.2rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo-osinec">OSINEC</div>
+        <h1 class="page-title">Paid Ads Playbook Pt I</h1>
+
+        <!-- Меню -->
+        <div class="sidebar-container">
+            <div class="sidebar-header" id="sidebar-toggle">
+                Содержание
+            </div>
+            <div class="sidebar" id="sidebar-menu">
+                <ul>
+                    <li><a>Context</a></li>
+                    <li><a>Problem & Definition</a></li>
+                    <li><a>Lead Magnet Mastery</a></li>
+                    <li><a>First 5 Clients Framework</a></li>
+                    <li><a>Mozi Media Content Method Pt I</a></li>
+                    <li><a>Mozi Media Content Method Pt II</a></li>
+                    <li><a>Cold Outreach Playbook</a></li>
+                    <li><a>Paid Ads Playbook Pt I</a></li>
+                    <li><a>Paid Ads Playbook Pt II</a></li>
+                    <li><a>More Better Now</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- ВИДЕО С YANDEX -->
+        <div class="video-container">
+            <div class="video-player-container">
+                <!-- Контейнер для iframe -->
+                <div class="yandex-player-container" id="yandexPlayerContainer">
+                    <iframe
+                        class="yandex-player-iframe"
+                        allow="encrypted-media"
+                        allowfullscreen
+                        loading="lazy"
+                    ></iframe>
+                </div>
+
+                <!-- Превью -->
+                <div class="video-preview" id="videoPreview">
+                    <div class="preview-play-icon">
+                        <i class="fas fa-play"></i>
+                    </div>
+                    <div class="preview-title">Нажмите, чтобы воспроизвести видео</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Форма -->
+        <aside class="sidebar-right">
+            <h2 class="form-title">Оставьте контакты</h2>
+            <form id="simple-contact-form">
+                <div class="form-group">
+                    <label for="name">Имя</label>
+                    <input type="text" id="name" name="name" required placeholder="Алексей">
+                </div>
+                <div class="form-group">
+                    <label for="phone">Номер телефона</label>
+                    <input type="tel" id="phone" name="phone" required placeholder="+7 999 123-45-67">
+                </div>
+                <div class="form-group">
+                    <label for="telegram">Ваш @ в Telegram</label>
+                    <input type="text" id="telegram" name="telegram" required placeholder="@example">
+                </div>
+                <button type="submit" class="submit-btn">Отправить</button>
+                <p class="disclaimer">
+                    Нажимая «Отправить», вы соглашаетесь на обработку персональных данных.
+                </p>
+            </form>
+        </aside>
+    </div>
+
+    <script>
+        // === YANDEX VIDEO ===
+        const videoPreview = document.getElementById('videoPreview');
+        const yandexContainer = document.getElementById('yandexPlayerContainer');
+        const iframe = yandexContainer.querySelector('iframe');
+
+        // ⚠️ ЗАМЕНИТЕ ЭТОТ URL на ваш реальный URL с Yandex.Video
+        const YANDEX_VIDEO_URL = "https://runtime.video.cloud.yandex.net/player/video/vplvscsviln3pecevi4w?autoplay=1";
+
+        videoPreview.addEventListener('click', function() {
+            // Скрываем превью
+            videoPreview.style.display = 'none';
+            // Показываем iframe
+            yandexContainer.style.display = 'block';
+            // Загружаем видео (только при клике)
+            iframe.src = YANDEX_VIDEO_URL;
+        });
+
+        // === МЕНЮ ===
+        document.getElementById('sidebar-toggle').addEventListener('click', function() {
+            const sidebar = document.getElementById('sidebar-menu');
+            const toggle = this;
+            sidebar.classList.toggle('active');
+            toggle.classList.toggle('active');
+            if (sidebar.classList.contains('active')) {
+                toggle.style.borderBottomLeftRadius = '0';
+                toggle.style.borderBottomRightRadius = '0';
+            } else {
+                toggle.style.borderBottomLeftRadius = '12px';
+                toggle.style.borderBottomRightRadius = '12px';
+            }
+        });
+
+        // === ФОРМА ===
+        document.getElementById('simple-contact-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const name = document.getElementById('name').value.trim();
+            const phone = document.getElementById('phone').value.trim();
+            const telegram = document.getElementById('telegram').value.trim().replace(/^@?/, '@');
+            alert(`Спасибо, ${name}!\nВаш номер: ${phone}\nTelegram: ${telegram}`);
+            this.reset();
+        });
+    </script>
+</body>
+</html>
