@@ -6,7 +6,7 @@
     <title>Paid Ads Playbook Pt I</title>
     <!-- Подключаем Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-    <!-- Иконки (для play-кнопки) -->
+    <!-- Иконки -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
@@ -27,8 +27,8 @@
             max-width: 1200px;
             margin: 0 auto;
             display: flex;
-            gap: 20px;
             flex-direction: column;
+            gap: 20px;
         }
 
         /* Логотип */
@@ -65,7 +65,7 @@
             border-radius: 2px;
         }
 
-        /* Меню — зеленый градиент */
+        /* Меню — зеленый градиент, на всю ширину */
         .sidebar-container {
             width: 100%;
             margin-bottom: 20px;
@@ -142,7 +142,7 @@
             opacity: 1;
         }
 
-        /* ВИДЕО КОНТЕЙНЕР — НОВЫЙ СТИЛЬ */
+        /* ВИДЕО КОНТЕЙНЕР — ЦЕНТРИРОВАННЫЙ */
         .video-container {
             width: 100%;
             max-width: 800px;
@@ -152,6 +152,9 @@
             overflow: hidden;
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
             height: 450px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
 
         .video-player-container {
@@ -178,8 +181,6 @@
             width: 100%;
             height: 100%;
             background: linear-gradient(135deg, #0D9488, #06B6D4);
-            background-size: cover;
-            background-position: center;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -208,21 +209,30 @@
             filter: drop-shadow(0 2px 6px rgba(0,0,0,0.4));
         }
 
-        .preview-title {
+        .preview-text {
             font-family: 'Poppins', sans-serif;
-            font-size: 1.4rem;
-            font-weight: 600;
+            font-size: 1.1rem;
+            font-weight: 500;
             text-shadow: 0 2px 6px rgba(0,0,0,0.5);
             letter-spacing: 0.5px;
         }
 
-        /* Форма — зеленый градиент */
+        /* ФОРМА — РАСПОЛОЖЕНА СЛЕВА ВНИЗУ */
+        .form-wrapper {
+            width: 100%;
+            display: flex;
+            justify-content: flex-start;
+            margin-top: 20px;
+        }
+
         .sidebar-right {
             width: 300px;
             background: linear-gradient(135deg, #00b09b, #96c93d);
             padding: 25px;
             border-radius: 16px;
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.1);
         }
 
         .form-title {
@@ -297,15 +307,25 @@
             font-family: 'Inter', sans-serif;
         }
 
-        /* Адаптив */
+        /* Адаптивность */
         @media (max-width: 1024px) {
-            .video-container { height: 350px; }
-            .sidebar-right { width: 100%; margin-bottom: 20px; }
+            .video-container { 
+                max-width: 100%; 
+                height: 350px; 
+            }
+            .form-wrapper { justify-content: center; }
+            .sidebar-right { width: 100%; }
         }
+
         @media (max-width: 768px) {
             .video-container { height: 300px; }
             .preview-play-icon { font-size: 3rem; }
-            .preview-title { font-size: 1.2rem; }
+            .preview-text { font-size: 1rem; }
+        }
+
+        @media (max-width: 480px) {
+            .video-container { height: 250px; }
+            .preview-play-icon { font-size: 2.5rem; }
         }
     </style>
 </head>
@@ -335,7 +355,7 @@
             </div>
         </div>
 
-        <!-- ВИДЕО С YANDEX -->
+        <!-- ВИДЕО — ЦЕНТРИРОВАННОЕ -->
         <div class="video-container">
             <div class="video-player-container">
                 <!-- Контейнер для iframe -->
@@ -353,33 +373,35 @@
                     <div class="preview-play-icon">
                         <i class="fas fa-play"></i>
                     </div>
-                    <div class="preview-title">Нажмите, чтобы воспроизвести видео</div>
+                    <div class="preview-text">Нажмите, чтобы воспроизвести видео</div>
                 </div>
             </div>
         </div>
 
-        <!-- Форма -->
-        <aside class="sidebar-right">
-            <h2 class="form-title">Оставьте контакты</h2>
-            <form id="simple-contact-form">
-                <div class="form-group">
-                    <label for="name">Имя</label>
-                    <input type="text" id="name" name="name" required placeholder="Алексей">
-                </div>
-                <div class="form-group">
-                    <label for="phone">Номер телефона</label>
-                    <input type="tel" id="phone" name="phone" required placeholder="+7 999 123-45-67">
-                </div>
-                <div class="form-group">
-                    <label for="telegram">Ваш @ в Telegram</label>
-                    <input type="text" id="telegram" name="telegram" required placeholder="@example">
-                </div>
-                <button type="submit" class="submit-btn">Отправить</button>
-                <p class="disclaimer">
-                    Нажимая «Отправить», вы соглашаетесь на обработку персональных данных.
-                </p>
-            </form>
-        </aside>
+        <!-- ФОРМА — СЛЕВА ВНИЗУ -->
+        <div class="form-wrapper">
+            <aside class="sidebar-right">
+                <h2 class="form-title">Оставьте контакты</h2>
+                <form id="simple-contact-form">
+                    <div class="form-group">
+                        <label for="name">Имя</label>
+                        <input type="text" id="name" name="name" required placeholder="Алексей">
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">Номер телефона</label>
+                        <input type="tel" id="phone" name="phone" required placeholder="+7 999 123-45-67">
+                    </div>
+                    <div class="form-group">
+                        <label for="telegram">Ваш @ в Telegram</label>
+                        <input type="text" id="telegram" name="telegram" required placeholder="@example">
+                    </div>
+                    <button type="submit" class="submit-btn">Отправить</button>
+                    <p class="disclaimer">
+                        Нажимая «Отправить», вы соглашаетесь на обработку персональных данных.
+                    </p>
+                </form>
+            </aside>
+        </div>
     </div>
 
     <script>
