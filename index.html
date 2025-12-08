@@ -100,7 +100,7 @@
 
         .sidebar-header.active::after {
             content: '-';
-            transform: translateY(-50%) rotate(180deg);
+            transform: translateY(-50%);
         }
 
         .sidebar {
@@ -133,7 +133,6 @@
             display: block;
             border-radius: 6px;
             font-family: 'Inter', sans-serif;
-            pointer-events: none;
             opacity: 0.9;
             text-align: center;
             transition: all 0.3s ease;
@@ -596,16 +595,16 @@
             </div>
             <div class="sidebar" id="sidebar-menu">
                 <ul>
-                    <li><a>Context</a></li>
-                    <li><a>Problem & Definition</a></li>
-                    <li><a>Lead Magnet Mastery</a></li>
-                    <li><a>First 5 Clients Framework</a></li>
-                    <li><a>Mozi Media Content Method Pt I</a></li>
-                    <li><a>Mozi Media Content Method Pt II</a></li>
-                    <li><a>Cold Outreach Playbook</a></li>
-                    <li><a>Paid Ads Playbook Pt I</a></li>
-                    <li><a>Paid Ads Playbook Pt II</a></li>
-                    <li><a>More Better Now</a></li>
+                    <li><a href="#">Context</a></li>
+                    <li><a href="#">Problem & Definition</a></li>
+                    <li><a href="#">Lead Magnet Mastery</a></li>
+                    <li><a href="#">First 5 Clients Framework</a></li>
+                    <li><a href="#">Mozi Media Content Method Pt I</a></li>
+                    <li><a href="#">Mozi Media Content Method Pt II</a></li>
+                    <li><a href="#">Cold Outreach Playbook</a></li>
+                    <li><a href="#">Paid Ads Playbook Pt I</a></li>
+                    <li><a href="#">Paid Ads Playbook Pt II</a></li>
+                    <li><a href="#">More Better Now</a></li>
                 </ul>
             </div>
         </div>
@@ -624,14 +623,19 @@
                 <div class="video-preview" id="videoPreview">
                     <div class="preview-play-icon">
                         <i class="fas fa-play"></i>
+                    </div>
+                    <div class="preview-text" id="preview-text-element">
+                        Нажмите для просмотра видео
+                    </div>
                 </div>
+            </div>
         </div>
 
         <div class="form-wrapper">
             <aside class="sidebar-right">
                 <div class="form-header">
-                    <h2>"Искусство быть достойным"</h2>
-                    <p>Оставьте, чтобы забронировать место в на участие в программе</p>
+                    <h2 id="form-title">"Искусство быть достойным"</h2>
+                    <p id="form-description">Оставьте, чтобы забронировать место в на участие в программе</p>
                 </div>
                 <div class="form-content">
                     <form id="simple-contact-form">
@@ -671,7 +675,7 @@
         // 2. Напишите ему /start
         // 3. Скопируйте ваш ID (цифры)
         // 4. Вставьте сюда вместо 123456789
-        const TELEGRAM_CHAT_ID = "402109857"; // ⬅️ ЗАМЕНИТЕ НА ВАШ ID!
+        const TELEGRAM_CHAT_ID = "402109857";
         
         // ⭐ ЗАМЕНИТЕ НА URL ВАШЕГО ВИДЕО (если нужно)
         const YANDEX_VIDEO_URL = "https://runtime.video.cloud.yandex.net/player/video/vplvscsviln3pecevi4w?autoplay=1";
@@ -680,7 +684,7 @@
         const PREVIEW_IMAGE_URL = "https://images.unsplash.com/photo-1553877522-43269d4ea984?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80";
         
         // ⭐ ТЕКСТ ДЛЯ ПРЕВЬЮ ВИДЕО (можно оставить или изменить)
-       
+        const PREVIEW_TEXT = "Нажмите для просмотра видео";
         
         // ⭐ ТЕКСТ ДЛЯ ФОРМЫ (можно изменить если нужно)
         const FORM_TITLE = "Получите полный доступ к курсу";
@@ -697,6 +701,8 @@
         const previewTextElement = document.getElementById('preview-text-element');
         const submitButton = document.getElementById('submit-button');
         const form = document.getElementById('simple-contact-form');
+        const formTitle = document.getElementById('form-title');
+        const formDescription = document.getElementById('form-description');
         
         function showNotification(message, type = 'success') {
             const oldNotification = document.querySelector('.notification');
@@ -780,13 +786,9 @@
         }
         
         function setFormText() {
-            const formHeader = document.querySelector('.form-header h2');
-            const formDescription = document.querySelector('.form-header p');
-            const formButton = document.querySelector('.submit-btn');
-            
-            if (formHeader) formHeader.textContent = FORM_TITLE;
-            if (formDescription) formDescription.textContent = FORM_DESCRIPTION;
-            if (formButton) formButton.textContent = FORM_BUTTON_TEXT;
+            formTitle.textContent = FORM_TITLE;
+            formDescription.textContent = FORM_DESCRIPTION;
+            submitButton.textContent = FORM_BUTTON_TEXT;
         }
         
         async function handleFormSubmit(e) {
@@ -794,7 +796,14 @@
             
             const name = document.getElementById('name').value.trim();
             const phone = document.getElementById('phone').value.trim();
-            const telegram = document.getElementById('telegram').value.trim().replace(/^@?/, '@');
+            const telegramInput = document.getElementById('telegram');
+            let telegram = telegramInput.value.trim();
+            
+            // Добавляем @ если его нет
+            if (telegram && !telegram.startsWith('@')) {
+                telegram = '@' + telegram;
+                telegramInput.value = telegram;
+            }
             
             if (!name || !phone || !telegram) {
                 showNotification('❌ Пожалуйста, заполните все поля', 'error');
@@ -876,7 +885,8 @@
         
         document.getElementById('telegram').addEventListener('input', function(e) {
             let value = this.value.trim();
-            if (value.startsWith('@')) {
+            // Удаляем все @ в начале
+            while (value.startsWith('@')) {
                 value = value.substring(1);
             }
             this.value = value ? `@${value}` : '';
