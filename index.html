@@ -37,9 +37,6 @@
             gap: 25px;
         }
 
-             
-
-        /* Заголовок страницы */
         .page-title {
             font-family: 'Poppins', sans-serif;
             font-size: 2.5em;
@@ -64,7 +61,6 @@
             border-radius: 2px;
         }
 
-        /* Меню — зеленый градиент */
         .sidebar-container {
             width: 100%;
             max-width: 800px;
@@ -150,7 +146,6 @@
             opacity: 1;
         }
 
-        /* ВИДЕО КОНТЕЙНЕР — ЦЕНТРИРОВАННЫЙ */
         .video-container {
             width: 100%;
             max-width: 800px;
@@ -185,7 +180,6 @@
             border-radius: 16px;
         }
 
-        /* Превью — теперь с реальным кадром видео */
         .video-preview {
             width: 100%;
             height: 100%;
@@ -245,7 +239,6 @@
             z-index: 1;
         }
 
-        /* ФОРМА — ЦЕНТРИРОВАННАЯ С ЦВЕТНЫМ ВЕРХОМ */
         .form-wrapper {
             width: 100%;
             max-width: 800px;
@@ -291,16 +284,6 @@
 
         .form-content {
             padding: 30px;
-        }
-
-        .form-title {
-            font-family: 'Poppins', sans-serif;
-            font-size: 1.3em;
-            margin-bottom: 25px;
-            font-weight: 600;
-            color: white;
-            text-align: center;
-            letter-spacing: 0.5px;
         }
 
         .form-group {
@@ -361,6 +344,12 @@
             box-shadow: 0 6px 20px rgba(255, 122, 89, 0.5);
         }
 
+        .submit-btn:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+            transform: none;
+        }
+
         .disclaimer {
             font-size: 0.8em;
             color: rgba(255, 255, 255, 0.8);
@@ -370,7 +359,33 @@
             font-family: 'Inter', sans-serif;
         }
 
-        /* Адаптивность для телефонов */
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 15px 25px;
+            border-radius: 8px;
+            color: white;
+            font-weight: 500;
+            z-index: 1000;
+            opacity: 0;
+            transform: translateY(-20px);
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        .notification.success {
+            background: linear-gradient(135deg, #00b09b, #96c93d);
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .notification.error {
+            background: linear-gradient(135deg, #ff416c, #ff4b2b);
+            opacity: 1;
+            transform: translateY(0);
+        }
+
         @media (max-width: 1024px) {
             .container {
                 gap: 20px;
@@ -394,11 +409,6 @@
             
             .container {
                 gap: 15px;
-            }
-            
-            .logo-osinec {
-                font-size: 2.2em;
-                margin-bottom: 5px;
             }
             
             .page-title {
@@ -457,10 +467,6 @@
             
             .container {
                 gap: 12px;
-            }
-            
-            .logo-osinec {
-                font-size: 1.8em;
             }
             
             .page-title {
@@ -553,10 +559,6 @@
                 height: 220px; 
             }
             
-            .logo-osinec {
-                font-size: 1.6em;
-            }
-            
             .page-title {
                 font-size: 1.4em;
             }
@@ -586,8 +588,8 @@
 </head>
 <body>
     <div class="container">
-             <h1 class="page-title"> Искусство быть достойным </h1>
-        <!-- Меню -->
+        <h1 class="page-title">Искусство быть достойным</h1>
+        
         <div class="sidebar-container">
             <div class="sidebar-header" id="sidebar-toggle">
                 Содержание
@@ -608,10 +610,8 @@
             </div>
         </div>
 
-        <!-- ВИДЕО — ЦЕНТРИРОВАННОЕ, С ПЕРВЫМ КАДРОМ -->
         <div class="video-container">
             <div class="video-player-container">
-                <!-- Контейнер для iframe -->
                 <div class="yandex-player-container" id="yandexPlayerContainer">
                     <iframe
                         class="yandex-player-iframe"
@@ -621,9 +621,6 @@
                     ></iframe>
                 </div>
 
-                <!-- Превью — теперь с фоновым изображением первого кадра -->
-                <!-- ⚠️ МЕСТО ДЛЯ ВАШЕГО ПРЕВЬЮ: -->
-                <!-- Измените URL изображения и текст ниже -->
                 <div class="video-preview" id="videoPreview">
                     <div class="preview-play-icon">
                         <i class="fas fa-play"></i>
@@ -633,12 +630,9 @@
             </div>
         </div>
 
-        <!-- ФОРМА — ЦЕНТРИРОВАННАЯ С ЦВЕТНЫМ ВЕРХОМ -->
         <div class="form-wrapper">
             <aside class="sidebar-right">
                 <div class="form-header">
-                    <!-- ⚠️ МЕСТО ДЛЯ ВАШЕГО ТЕКСТА: -->
-                    <!-- Измените заголовок и описание ниже -->
                     <h2>Получите полный доступ к курсу</h2>
                     <p>Оставьте свои контакты и мы вышлем вам полную версию курса "Paid Ads Playbook" с дополнительными материалами, шаблонами и персональной консультацией</p>
                 </div>
@@ -656,7 +650,7 @@
                             <label for="telegram">Ваш @ в Telegram</label>
                             <input type="text" id="telegram" name="telegram" required placeholder="@example">
                         </div>
-                        <button type="submit" class="submit-btn">Получить доступ к курсу</button>
+                        <button type="submit" class="submit-btn" id="submit-button">Получить доступ к курсу</button>
                         <p class="disclaimer">
                             Нажимая кнопку, вы соглашаетесь с политикой конфиденциальности и даете согласие на обработку персональных данных.
                         </p>
@@ -667,35 +661,127 @@
     </div>
 
     <script>
-        // === КОНФИГУРАЦИЯ ПРЕВЬЮ ===
-        // ⚠️ МЕСТО ДЛЯ ВАШЕГО ПРЕВЬЮ:
-        // Измените URL изображения и текст ниже
+        // ════════════════════════════════════════════════════════
+        // ⚠️ ВНИМАНИЕ: ВАМ НУЖНО ПОМЕНЯТЬ ЭТИ ЗНАЧЕНИЯ! ⚠️
+        // ════════════════════════════════════════════════════════
+        
+        // ⭐ ЗАМЕНИТЕ НИЖЕ НА ВАШ ТОКЕН БОТА (он у вас уже есть)
+        const TELEGRAM_BOT_TOKEN = "8062214606:AAGNJNICxADgoLwxpA6sXB3eXDWqc7NA29Y";
+        
+        // ⭐ ЗАМЕНИТЕ НИЖЕ НА ВАШ ID В TELEGRAM
+        // Чтобы получить свой ID:
+        // 1. Найдите в Telegram бота @userinfobot
+        // 2. Напишите ему /start
+        // 3. Скопируйте ваш ID (цифры)
+        // 4. Вставьте сюда вместо 123456789
+        const TELEGRAM_CHAT_ID = "402109857"; // ⬅️ ЗАМЕНИТЕ НА ВАШ ID!
+        
+        // ⭐ ЗАМЕНИТЕ НА URL ВАШЕГО ВИДЕО (если нужно)
+        const YANDEX_VIDEO_URL = "https://runtime.video.cloud.yandex.net/player/video/vplvscsviln3pecevi4w?autoplay=1";
+        
+        // ⭐ ЗАМЕНИТЕ НА URL ИЗОБРАЖЕНИЯ ДЛЯ ПРЕВЬЮ (если нужно)
         const PREVIEW_IMAGE_URL = "https://images.unsplash.com/photo-1553877522-43269d4ea984?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80";
         
+        // ⭐ ТЕКСТ ДЛЯ ПРЕВЬЮ ВИДЕО (можно оставить или изменить)
+       
         
-        // === КОНФИГУРАЦИЯ ФОРМЫ ===
-        // ⚠️ МЕСТО ДЛЯ ВАШЕГО ТЕКСТА ФОРМЫ:
-        // Измените заголовок, описание и текст кнопки ниже
+        // ⭐ ТЕКСТ ДЛЯ ФОРМЫ (можно изменить если нужно)
         const FORM_TITLE = "Получите полный доступ к курсу";
         const FORM_DESCRIPTION = "Оставьте свои контакты и мы вышлем вам полную версию курса 'Paid Ads Playbook' с дополнительными материалами, шаблонами и персональной консультацией";
         const FORM_BUTTON_TEXT = "Получить доступ к курсу";
         
-        // === YANDEX VIDEO ===
+        // ════════════════════════════════════════════════════════
+        // ДАЛЕЕ КОД ИДЕТ БЕЗ ИЗМЕНЕНИЙ
+        // ════════════════════════════════════════════════════════
+        
         const videoPreview = document.getElementById('videoPreview');
         const yandexContainer = document.getElementById('yandexPlayerContainer');
         const iframe = yandexContainer.querySelector('iframe');
         const previewTextElement = document.getElementById('preview-text-element');
+        const submitButton = document.getElementById('submit-button');
+        const form = document.getElementById('simple-contact-form');
+        
+        function showNotification(message, type = 'success') {
+            const oldNotification = document.querySelector('.notification');
+            if (oldNotification) {
+                oldNotification.remove();
+            }
+            
+            const notification = document.createElement('div');
+            notification.className = `notification ${type}`;
+            notification.textContent = message;
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.style.opacity = '0';
+                notification.style.transform = 'translateY(-20px)';
+                setTimeout(() => {
+                    if (notification.parentNode) {
+                        notification.parentNode.removeChild(notification);
+                    }
+                }, 300);
+            }, 5000);
+        }
+        
+        async function sendToTelegram(formData) {
+            try {
+                const text = `🎯 НОВАЯ ЗАЯВКА С САЙТА "Искусство быть достойным"\n\n` +
+                            `👤 <b>Имя:</b> ${formData.name}\n` +
+                            `📞 <b>Телефон:</b> ${formData.phone}\n` +
+                            `📱 <b>Telegram:</b> ${formData.telegram}\n` +
+                            `⏰ <b>Время:</b> ${new Date().toLocaleString('ru-RU')}\n` +
+                            `🌐 <b>IP:</b> ${await getUserIP()}\n` +
+                            `🖥 <b>Браузер:</b> ${navigator.userAgent}`;
 
-        // ⚠️ ЗАМЕНИТЕ ЭТОТ URL на ваш реальный URL с Yandex.Video
-        const YANDEX_VIDEO_URL = "https://runtime.video.cloud.yandex.net/player/video/vplvscsviln3pecevi4w?autoplay=1";
+                const url = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`;
+                
+                const response = await fetch(url, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        chat_id: TELEGRAM_CHAT_ID,
+                        text: text,
+                        parse_mode: 'HTML'
+                    })
+                });
 
-        // Устанавливаем превью из конфигурации
+                const result = await response.json();
+                
+                if (result.ok) {
+                    return { success: true, message: '✅ Данные успешно отправлены в Telegram!' };
+                } else {
+                    console.error('Ошибка Telegram API:', result);
+                    return { 
+                        success: false, 
+                        message: `❌ Ошибка отправки: ${result.description || 'Неизвестная ошибка'}` 
+                    };
+                }
+            } catch (error) {
+                console.error('Ошибка сети:', error);
+                return { 
+                    success: false, 
+                    message: '❌ Ошибка сети. Проверьте подключение к интернету.' 
+                };
+            }
+        }
+        
+        async function getUserIP() {
+            try {
+                const response = await fetch('https://api.ipify.org?format=json');
+                const data = await response.json();
+                return data.ip;
+            } catch (error) {
+                return 'Не удалось определить IP';
+            }
+        }
+        
         function setVideoPreview() {
             videoPreview.style.backgroundImage = `url('${PREVIEW_IMAGE_URL}')`;
             previewTextElement.textContent = PREVIEW_TEXT;
         }
-
-        // Устанавливаем текст формы из конфигурации
+        
         function setFormText() {
             const formHeader = document.querySelector('.form-header h2');
             const formDescription = document.querySelector('.form-header p');
@@ -705,24 +791,72 @@
             if (formDescription) formDescription.textContent = FORM_DESCRIPTION;
             if (formButton) formButton.textContent = FORM_BUTTON_TEXT;
         }
-
-        // Применяем настройки при загрузке страницы
+        
+        async function handleFormSubmit(e) {
+            e.preventDefault();
+            
+            const name = document.getElementById('name').value.trim();
+            const phone = document.getElementById('phone').value.trim();
+            const telegram = document.getElementById('telegram').value.trim().replace(/^@?/, '@');
+            
+            if (!name || !phone || !telegram) {
+                showNotification('❌ Пожалуйста, заполните все поля', 'error');
+                return;
+            }
+            
+            if (phone.length < 5) {
+                showNotification('❌ Введите корректный номер телефона', 'error');
+                return;
+            }
+            
+            const originalButtonText = submitButton.textContent;
+            submitButton.textContent = '📤 Отправляем...';
+            submitButton.disabled = true;
+            
+            try {
+                const formData = { name, phone, telegram };
+                const result = await sendToTelegram(formData);
+                
+                if (result.success) {
+                    showNotification(`✅ Спасибо, ${name}! Заявка отправлена. Мы свяжемся с вами в ближайшее время.`, 'success');
+                    form.reset();
+                    
+                    // Дополнительное сообщение пользователю через 2 секунды
+                    setTimeout(() => {
+                        showNotification('📱 Проверьте ваш Telegram, мы скоро напишем вам там!', 'success');
+                    }, 2000);
+                } else {
+                    showNotification(result.message, 'error');
+                }
+            } catch (error) {
+                showNotification('❌ Произошла ошибка при отправке. Попробуйте еще раз.', 'error');
+            } finally {
+                submitButton.textContent = originalButtonText;
+                submitButton.disabled = false;
+            }
+        }
+        
         document.addEventListener('DOMContentLoaded', function() {
             setVideoPreview();
             setFormText();
+            
+            if (TELEGRAM_CHAT_ID === "123456789") {
+                console.error('⚠️ ВНИМАНИЕ: Вы не заменили TELEGRAM_CHAT_ID!');
+                showNotification('⚠️ Настройте TELEGRAM_CHAT_ID в коде!', 'error');
+            }
+            
+            if (!TELEGRAM_BOT_TOKEN) {
+                console.error('⚠️ ВНИМАНИЕ: Отсутствует TELEGRAM_BOT_TOKEN!');
+                showNotification('⚠️ Настройте TELEGRAM_BOT_TOKEN в коде!', 'error');
+            }
         });
-
-        // Обработка клика по превью
+        
         videoPreview.addEventListener('click', function() {
-            // Скрываем превью
             videoPreview.style.display = 'none';
-            // Показываем iframe
             yandexContainer.style.display = 'block';
-            // Загружаем видео (только при клике)
             iframe.src = YANDEX_VIDEO_URL;
         });
-
-        // === МЕНЮ ===
+        
         document.getElementById('sidebar-toggle').addEventListener('click', function() {
             const sidebar = document.getElementById('sidebar-menu');
             const toggle = this;
@@ -736,31 +870,19 @@
                 toggle.style.borderBottomRightRadius = '12px';
             }
         });
-
-        // === ФОРМА ===
-        document.getElementById('simple-contact-form').addEventListener('submit', function(e) {
-            e.preventDefault();
-            const name = document.getElementById('name').value.trim();
-            const phone = document.getElementById('phone').value.trim();
-            const telegram = document.getElementById('telegram').value.trim().replace(/^@?/, '@');
-            
-            // Простая валидация
-            if (!name || !phone || !telegram) {
-                alert('Пожалуйста, заполните все поля');
-                return;
-            }
-            
-            // Здесь обычно отправка данных на сервер
-            // Для примера просто показываем сообщение
-            alert(`Спасибо, ${name}!\nМы отправили полный доступ к курсу на ваши контакты.\nТелефон: ${phone}\nTelegram: ${telegram}\n\nСсылка на курс уже отправлена вам!`);
-            
-            // Очищаем форму
-            this.reset();
-        });
-
-        // Валидация телефона
+        
+        form.addEventListener('submit', handleFormSubmit);
+        
         document.getElementById('phone').addEventListener('input', function(e) {
             this.value = this.value.replace(/[^\d+\s\-()]/g, '');
+        });
+        
+        document.getElementById('telegram').addEventListener('input', function(e) {
+            let value = this.value.trim();
+            if (value.startsWith('@')) {
+                value = value.substring(1);
+            }
+            this.value = value ? `@${value}` : '';
         });
     </script>
 </body>
