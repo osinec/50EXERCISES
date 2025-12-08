@@ -76,7 +76,7 @@
             padding: 18px 20px;
             cursor: pointer;
             display: flex;
-            justify-content: center;
+            justify-content: space-between;
             align-items: center;
             font-size: 1.1em;
             font-weight: bold;
@@ -84,7 +84,6 @@
             border-top-left-radius: 12px;
             border-top-right-radius: 12px;
             position: relative;
-            text-align: center;
         }
 
         .sidebar-header::after {
@@ -92,15 +91,10 @@
             font-size: 1.5em;
             font-weight: normal;
             transition: transform 0.3s;
-            position: absolute;
-            right: 20px;
-            top: 50%;
-            transform: translateY(-50%);
         }
 
         .sidebar-header.active::after {
             content: '-';
-            transform: translateY(-50%);
         }
 
         .sidebar {
@@ -136,6 +130,11 @@
             opacity: 0.9;
             text-align: center;
             transition: all 0.3s ease;
+        }
+
+        .sidebar a:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+            opacity: 1;
         }
 
         .sidebar a.active {
@@ -591,7 +590,8 @@
         
         <div class="sidebar-container">
             <div class="sidebar-header" id="sidebar-toggle">
-                Содержание
+                <span>Содержание</span>
+                <span class="toggle-icon"></span>
             </div>
             <div class="sidebar" id="sidebar-menu">
                 <ul>
@@ -635,7 +635,7 @@
             <aside class="sidebar-right">
                 <div class="form-header">
                     <h2 id="form-title">"Искусство быть достойным"</h2>
-                    <p id="form-description">Оставьте, чтобы забронировать место на участие в программе</p>
+                    <p id="form-description">Оставьте данные, чтобы забронировать место на участие в программе</p>
                 </div>
                 <div class="form-content">
                     <form id="simple-contact-form">
@@ -688,7 +688,7 @@
         
         // ⭐ ТЕКСТ ДЛЯ ФОРМЫ (можно изменить если нужно)
         const FORM_TITLE = "Забронируй место на курс";
-        const FORM_DESCRIPTION = "Оставьте данные, чтобы забронировать место на участие в программе "Искусство быть достойным";
+        const FORM_DESCRIPTION = 'Оставьте данные, чтобы забронировать место на участие в программе "Искусство быть достойным"';
         const FORM_BUTTON_TEXT = "Получить доступ к курсу";
         
         // ════════════════════════════════════════════════════════
@@ -703,6 +703,9 @@
         const form = document.getElementById('simple-contact-form');
         const formTitle = document.getElementById('form-title');
         const formDescription = document.getElementById('form-description');
+        const sidebarToggle = document.getElementById('sidebar-toggle');
+        const sidebarMenu = document.getElementById('sidebar-menu');
+        const toggleIcon = sidebarToggle.querySelector('.toggle-icon');
         
         function showNotification(message, type = 'success') {
             const oldNotification = document.querySelector('.notification');
@@ -842,6 +845,21 @@
             }
         }
         
+        // Функция для переключения сайдбара
+        function toggleSidebar() {
+            sidebarMenu.classList.toggle('active');
+            sidebarToggle.classList.toggle('active');
+            
+            // Обновляем скругление углов заголовка
+            if (sidebarMenu.classList.contains('active')) {
+                sidebarToggle.style.borderBottomLeftRadius = '0';
+                sidebarToggle.style.borderBottomRightRadius = '0';
+            } else {
+                sidebarToggle.style.borderBottomLeftRadius = '12px';
+                sidebarToggle.style.borderBottomRightRadius = '12px';
+            }
+        }
+        
         document.addEventListener('DOMContentLoaded', function() {
             setVideoPreview();
             setFormText();
@@ -855,26 +873,41 @@
                 console.error('⚠️ ВНИМАНИЕ: Отсутствует TELEGRAM_BOT_TOKEN!');
                 showNotification('⚠️ Настройте TELEGRAM_BOT_TOKEN в коде!', 'error');
             }
+            
+            // Инициализация сайдбара
+            sidebarToggle.addEventListener('click', toggleSidebar);
+            
+            // Добавляем обработчики для пунктов меню
+            const menuItems = document.querySelectorAll('.sidebar a');
+            menuItems.forEach(item => {
+                item.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    // Удаляем активный класс у всех пунктов
+                    menuItems.forEach(i => i.classList.remove('active'));
+                    
+                    // Добавляем активный класс текущему пункту
+                    this.classList.add('active');
+                    
+                    // Закрываем сайдбар на мобильных устройствах
+                    if (window.innerWidth <= 768) {
+                        setTimeout(() => {
+                            toggleSidebar();
+                        }, 300);
+                    }
+                });
+            });
+            
+            // Активируем первый пункт меню по умолчанию
+            if (menuItems.length > 0) {
+                menuItems[0].classList.add('active');
+            }
         });
         
         videoPreview.addEventListener('click', function() {
             videoPreview.style.display = 'none';
             yandexContainer.style.display = 'block';
             iframe.src = YANDEX_VIDEO_URL;
-        });
-        
-        document.getElementById('sidebar-toggle').addEventListener('click', function() {
-            const sidebar = document.getElementById('sidebar-menu');
-            const toggle = this;
-            sidebar.classList.toggle('active');
-            toggle.classList.toggle('active');
-            if (sidebar.classList.contains('active')) {
-                toggle.style.borderBottomLeftRadius = '0';
-                toggle.style.borderBottomRightRadius = '0';
-            } else {
-                toggle.style.borderBottomLeftRadius = '12px';
-                toggle.style.borderBottomRightRadius = '12px';
-            }
         });
         
         form.addEventListener('submit', handleFormSubmit);
