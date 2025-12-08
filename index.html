@@ -84,64 +84,97 @@
             border-top-left-radius: 12px;
             border-top-right-radius: 12px;
             position: relative;
-        }
-
-        .sidebar-header::after {
-            content: '+';
-            font-size: 1.5em;
-            font-weight: normal;
-            transition: transform 0.3s;
-        }
-
-        .sidebar-header.active::after {
-            content: '-';
-        }
-
-        .sidebar {
-            padding: 0;
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.3s ease-out;
             background: linear-gradient(135deg, #00b09b, #96c93d);
         }
 
-        .sidebar.active {
+        .sidebar-header::after {
+            content: '−';
+            font-size: 1.8em;
+            font-weight: normal;
+            transition: transform 0.3s;
+            line-height: 0.8;
+        }
+
+        .sidebar-header.closed::after {
+            content: '+';
+        }
+
+        .sidebar {
+            padding: 20px 20px 25px 20px;
             max-height: 500px;
-            padding: 0 0 20px 0;
+            overflow-y: auto;
+            transition: max-height 0.3s ease-out, padding 0.3s ease-out;
+            background: linear-gradient(135deg, #00b09b, #96c93d);
+        }
+
+        .sidebar.closed {
+            max-height: 0;
+            padding: 0 20px;
         }
 
         .sidebar ul {
             list-style: none;
             margin: 0;
-            padding: 0 20px;
+            padding: 0;
         }
 
         .sidebar li {
-            margin-bottom: 12px;
+            margin-bottom: 10px;
+            transition: transform 0.2s ease;
+        }
+
+        .sidebar li:hover {
+            transform: translateX(5px);
         }
 
         .sidebar a {
             color: white;
             text-decoration: none;
-            padding: 12px 15px;
+            padding: 14px 18px;
             display: block;
-            border-radius: 6px;
+            border-radius: 8px;
             font-family: 'Inter', sans-serif;
             opacity: 0.9;
-            text-align: center;
             transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.1);
+            border-left: 4px solid rgba(255, 255, 255, 0.3);
+            font-size: 0.95em;
         }
 
         .sidebar a:hover {
-            background-color: rgba(255, 255, 255, 0.1);
+            background-color: rgba(255, 255, 255, 0.2);
             opacity: 1;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
         }
 
         .sidebar a.active {
-            background-color: rgba(255, 255, 255, 0.2);
+            background-color: rgba(255, 255, 255, 0.25);
             color: white;
             font-weight: bold;
             opacity: 1;
+            border-left: 4px solid white;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+        }
+
+        .block-number {
+            display: inline-block;
+            width: 28px;
+            height: 28px;
+            background: rgba(255, 255, 255, 0.9);
+            color: #00b09b;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 28px;
+            margin-right: 12px;
+            font-weight: bold;
+            font-size: 0.85em;
+        }
+
+        .sidebar a.active .block-number {
+            background: white;
+            color: #00b09b;
+            font-weight: bold;
         }
 
         .video-container {
@@ -430,6 +463,28 @@
                 font-size: 1em;
             }
             
+            .sidebar {
+                padding: 15px 15px 20px 15px;
+                max-height: 400px;
+            }
+            
+            .sidebar.closed {
+                padding: 0 15px;
+            }
+            
+            .sidebar a {
+                padding: 12px 15px;
+                font-size: 0.92em;
+            }
+            
+            .block-number {
+                width: 24px;
+                height: 24px;
+                line-height: 24px;
+                margin-right: 10px;
+                font-size: 0.8em;
+            }
+            
             .sidebar-right {
                 max-width: 95%;
                 border-radius: 14px;
@@ -494,8 +549,29 @@
             }
             
             .sidebar-header::after {
-                right: 15px;
-                font-size: 1.3em;
+                font-size: 1.5em;
+            }
+            
+            .sidebar {
+                padding: 12px 12px 18px 12px;
+                max-height: 350px;
+            }
+            
+            .sidebar.closed {
+                padding: 0 12px;
+            }
+            
+            .sidebar a {
+                padding: 10px 12px;
+                font-size: 0.88em;
+            }
+            
+            .block-number {
+                width: 22px;
+                height: 22px;
+                line-height: 22px;
+                margin-right: 8px;
+                font-size: 0.75em;
             }
             
             .sidebar-right {
@@ -570,8 +646,16 @@
             }
             
             .sidebar a {
-                padding: 10px 12px;
-                font-size: 0.9em;
+                padding: 8px 10px;
+                font-size: 0.82em;
+            }
+            
+            .block-number {
+                width: 20px;
+                height: 20px;
+                line-height: 20px;
+                margin-right: 6px;
+                font-size: 0.7em;
             }
             
             .form-header {
@@ -591,22 +675,20 @@
         <div class="sidebar-container">
             <div class="sidebar-header" id="sidebar-toggle">
                 <span>Содержание</span>
-                <span class="toggle-icon"></span>
             </div>
             <div class="sidebar" id="sidebar-menu">
                 <ul>
-                    <li><a href="#">Context</a></li>
-                    <li><a href="#">Блок 0. Введение: Что такое достоинство на самом деле?</a></li>
-                    <li><a href="#">Блок 1. Золотая середина: Искусство баланса</a></li>
-                    <li><a href="#">Блок 2. Мужество: Действовать, когда страшно быть слабым</a></li>
-                    <li><a href="#">Блок 3. Умеренность: Контроль над желаниями</a></li>
-                    <li><a href="#">Блок 4. Справедливость: Честность как сила</a></li>
-                    <li><a href="#">Блок 5. Щедрость и величие души</a></li>
-                    <li><a href="#">Блок 6. Практическая мудрость (фронезис)</a></li>
-                    <li><a href="#">Блок 7. Дружба и сообщество</a></li>
-                    <li><a href="#">Блок 8. Привычка быть достойным</a></li>
-                    <li><a href="#">Блок 9. Жизнь достойного мужчины сегодня</a></li>
-                </ul>
+                    <li><a href="#" class="active"><span class="block-number">0</span> Введение: Что такое достоинство на самом деле?</a></li>
+                    <li><a href="#"><span class="block-number">1</span> Золотая середина: Искусство баланса</a></li>
+                    <li><a href="#"><span class="block-number">2</span> Мужество: Действовать, когда страшно быть слабым</a></li>
+                    <li><a href="#"><span class="block-number">3</span> Умеренность: Контроль над желаниями</a></li>
+                    <li><a href="#"><span class="block-number">4</span> Справедливость: Честность как сила</a></li>
+                    <li><a href="#"><span class="block-number">5</span> Щедрость и величие души</a></li>
+                    <li><a href="#"><span class="block-number">6</span> Практическая мудрость (фронезис)</a></li>
+                    <li><a href="#"><span class="block-number">7</span> Дружба и сообщество</a></li>
+                    <li><a href="#"><span class="block-number">8</span> Привычка быть достойным</a></li>
+                    <li><a href="#"><span class="block-number">9</span> Жизнь достойного мужчины сегодня</a></li>
+                    </ul>
             </div>
         </div>
 
@@ -671,11 +753,6 @@
         const TELEGRAM_BOT_TOKEN = "8062214606:AAGNJNICxADgoLwxpA6sXB3eXDWqc7NA29Y";
         
         // ⭐ ЗАМЕНИТЕ НИЖЕ НА ВАШ ID В TELEGRAM
-        // Чтобы получить свой ID:
-        // 1. Найдите в Telegram бота @userinfobot
-        // 2. Напишите ему /start
-        // 3. Скопируйте ваш ID (цифры)
-        // 4. Вставьте сюда вместо 123456789
         const TELEGRAM_CHAT_ID = "402109857";
         
         // ⭐ ЗАМЕНИТЕ НА URL ВАШЕГО ВИДЕО (если нужно)
@@ -706,7 +783,6 @@
         const formDescription = document.getElementById('form-description');
         const sidebarToggle = document.getElementById('sidebar-toggle');
         const sidebarMenu = document.getElementById('sidebar-menu');
-        const toggleIcon = sidebarToggle.querySelector('.toggle-icon');
         
         function showNotification(message, type = 'success') {
             const oldNotification = document.querySelector('.notification');
@@ -831,7 +907,6 @@
                     showNotification(`✅ Спасибо, ${name}! Заявка отправлена. Мы свяжемся с вами в ближайшее время.`, 'success');
                     form.reset();
                     
-                    // Дополнительное сообщение пользователю через 2 секунды
                     setTimeout(() => {
                         showNotification('📱 Проверьте ваш Telegram, мы скоро напишем вам там!', 'success');
                     }, 2000);
@@ -848,16 +923,15 @@
         
         // Функция для переключения сайдбара
         function toggleSidebar() {
-            sidebarMenu.classList.toggle('active');
-            sidebarToggle.classList.toggle('active');
+            sidebarMenu.classList.toggle('closed');
+            sidebarToggle.classList.toggle('closed');
             
-            // Обновляем скругление углов заголовка
-            if (sidebarMenu.classList.contains('active')) {
-                sidebarToggle.style.borderBottomLeftRadius = '0';
-                sidebarToggle.style.borderBottomRightRadius = '0';
-            } else {
+            if (sidebarMenu.classList.contains('closed')) {
                 sidebarToggle.style.borderBottomLeftRadius = '12px';
                 sidebarToggle.style.borderBottomRightRadius = '12px';
+            } else {
+                sidebarToggle.style.borderBottomLeftRadius = '0';
+                sidebarToggle.style.borderBottomRightRadius = '0';
             }
         }
         
@@ -875,7 +949,7 @@
                 showNotification('⚠️ Настройте TELEGRAM_BOT_TOKEN в коде!', 'error');
             }
             
-            // Инициализация сайдбара
+            // Инициализация сайдбара - открыт по умолчанию
             sidebarToggle.addEventListener('click', toggleSidebar);
             
             // Добавляем обработчики для пунктов меню
